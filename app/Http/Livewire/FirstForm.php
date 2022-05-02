@@ -57,7 +57,7 @@ class FirstForm extends Component
 
         ]);
 
-        session()->flash('message', 'Se ha creado una solicitud temporal');
+        session()->flash('message', 'Primer Paso Realizado');
 
         return redirect()->route('temporary.create_second', ['identf' => $temporal->identificador]);
         

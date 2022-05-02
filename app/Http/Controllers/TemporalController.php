@@ -30,7 +30,8 @@ class TemporalController extends Controller
 
     public function create_second($identf)
     {
-        return view('temporary.second' , ['identificador' => $identf]);
+        return view('temporary.second' , 
+        ['temporal' => Temporal::where('identificador', $identf)->first()]);
     }
 
     /**

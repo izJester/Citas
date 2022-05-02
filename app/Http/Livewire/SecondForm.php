@@ -7,12 +7,35 @@ use App\Models\Temporal;
 
 class SecondForm extends Component
 {
-    public $identificador;
-    public $temporal;
+    public Temporal $temporal;
+    public $show_enco = false;
+    public $type;
+    public $nacionales;
+    public $internacionales;
+    public $motivos = [];
+    public $encomienda;
+
 
     public function mount()
     {
-        $this->temporal = Temporal::where('identificador', $this->identificador)->first();
+        $this->nacionales = [
+            ['id' => '1', 'nombre' => 'Impresion Certificado' , 'price' => '0.427'],
+            ['id' => '2', 'nombre' => 'Record Academico' , 'price' => '0.53'],
+            ['id' => '3', 'nombre' => 'Notas Certificadas' , 'price' => '0.012'],
+            ['id' => '4', 'nombre' => 'Constancia de Culminacion' , 'price' => '0.427'],
+            ['id' => '5', 'nombre' => 'Certificacion de Programa' , 'price' => '0.427'],
+            ['id' => '6', 'nombre' => 'Certificacion de Cursos Comunitarios' , 'price' => '0.427'],
+        ];
+
+        $this->internacionales = [
+            ['id' => '1', 'nombre' => 'Impresion Certificado' , 'price' => '0'],
+            ['id' => '2', 'nombre' => 'Record Academico' , 'price' => '0'],
+            ['id' => '3', 'nombre' => 'Notas Certificadas' , 'price' => '0'],
+            ['id' => '4', 'nombre' => 'Constancia de Culminacion' , 'price' => '0'],
+            ['id' => '5', 'nombre' => 'Certificacion de Programa' , 'price' => '0'],
+            ['id' => '6', 'nombre' => 'Certificacion de Cursos Comunitarios' , 'price' => '0'],
+        ];
+        
     }
     
     public function render()
@@ -20,17 +43,25 @@ class SecondForm extends Component
         return view('livewire.second-form');
     }
 
+    public function updatedMotivos()
+    {
+        $this->show_enco = true;
+    }
+
     public function save()
     {
-        $this->validate();
+       
 
         $this->temporal->update([
+
+            'motivos' => $this->motivos,
+            'encomienda' => $this->encomienda,
             
         ]);
 
         session()->flash('message', 'Se ha creado una solicitud temporal');
 
-        return redirect()->route('temporal.index');
+        return redirect()->route('temporary.index');
         
     }
 }
