@@ -28,12 +28,12 @@ class SecondForm extends Component
         ];
 
         $this->internacionales = [
-            ['id' => '1', 'nombre' => 'Impresion Certificado' , 'price' => '0'],
-            ['id' => '2', 'nombre' => 'Record Academico' , 'price' => '0'],
-            ['id' => '3', 'nombre' => 'Notas Certificadas' , 'price' => '0'],
-            ['id' => '4', 'nombre' => 'Constancia de Culminacion' , 'price' => '0'],
-            ['id' => '5', 'nombre' => 'Certificacion de Programa' , 'price' => '0'],
-            ['id' => '6', 'nombre' => 'Certificacion de Cursos Comunitarios' , 'price' => '0'],
+            ['id' => '1', 'nombre' => 'Impresion Certificado' , 'price' => '0.57'],
+            ['id' => '2', 'nombre' => 'Record Academico' , 'price' => '0.80'],
+            ['id' => '3', 'nombre' => 'Notas Certificadas' , 'price' => '0.1'],
+            ['id' => '4', 'nombre' => 'Constancia de Culminacion' , 'price' => '0.57'],
+            ['id' => '5', 'nombre' => 'Certificacion de Programa' , 'price' => '0.57'],
+            ['id' => '6', 'nombre' => 'Certificacion de Cursos Comunitarios' , 'price' => '0.57'],
         ];
         
     }
@@ -46,6 +46,19 @@ class SecondForm extends Component
     public function updatedMotivos()
     {
         $this->show_enco = true;
+    }
+
+    public function calculateTotal()
+    {
+        $total = 0;
+        foreach ($this->motivos as $motivo) {
+            $step = json_decode($motivo);
+            $total += $step->price;
+        }
+        if ($this->encomienda) {
+            $total += 0.1;
+        }
+        return $total;
     }
 
     public function save()

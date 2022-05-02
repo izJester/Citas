@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Temporal;
 use App\Http\Controllers\TemporalController;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class FirstForm extends Component
 {
@@ -59,7 +60,11 @@ class FirstForm extends Component
 
         session()->flash('message', 'Primer Paso Realizado');
 
-        return redirect()->route('temporary.create_second', ['identf' => $temporal->identificador]);
+        $url = URL::temporarySignedRoute(
+            'temporary.create_second', now()->addMonth(), ['identf' => $temporal->identificador]
+        );
+
+        return redirect($url);
         
     }
 }

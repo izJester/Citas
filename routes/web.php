@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::controller(TemporalController::class)->group(function () {
     Route::get('/temporary-request', 'index')->name('temporary.index');
     Route::get('/temporary-request/create/f/{identf?}', 'create')->name('temporary.create');
-    Route::get('/temporary-request/create/s/{identf}', 'create_second')->name('temporary.create_second');
+    Route::get('/temporary-request/create/s/{identf}', 'create_second')->name('temporary.create_second')->middleware('signed');
 });
 
 Route::middleware([
