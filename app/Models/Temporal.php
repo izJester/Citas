@@ -22,7 +22,8 @@ class Temporal extends Model
         'fecha_nacimiento',
         'motivos',
         'encomienda',
-        'nucleo'
+        'nucleo',
+        'total'
     ];
 
     protected $casts = [

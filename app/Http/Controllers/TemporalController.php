@@ -34,6 +34,13 @@ class TemporalController extends Controller
         ['temporal' => Temporal::where('identificador', $identf)->first()]);
     }
 
+    public function create_third($identf)
+    {
+        return view('temporary.third' , 
+        ['temporal' => Temporal::where('identificador', $identf)->first()]);
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *

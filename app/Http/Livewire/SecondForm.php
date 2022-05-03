@@ -14,6 +14,7 @@ class SecondForm extends Component
     public $internacionales;
     public $motivos = [];
     public $encomienda;
+    public $total;
 
 
     public function mount()
@@ -58,23 +59,24 @@ class SecondForm extends Component
         if ($this->encomienda) {
             $total += 0.1;
         }
+
+        $this->total = number_format($total * 256.48 , 2 , ',' , '.');
+
         return $total;
     }
 
     public function save()
     {
-       
-
         $this->temporal->update([
 
             'motivos' => $this->motivos,
             'encomienda' => $this->encomienda,
-            
+            'total' => $this->total,
         ]);
 
-        session()->flash('message', 'Se ha creado una solicitud temporal');
+        session()->flash('message', 'Paso dos realizado');
 
-        return redirect()->route('temporary.index');
+        return redirect()->route('temporary.create_third' , ['identf' => $this->temporal->identificador]);
         
     }
 }
