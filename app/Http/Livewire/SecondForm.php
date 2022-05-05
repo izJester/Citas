@@ -3,11 +3,11 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Temporal;
+use App\Models\Tramite;
 
 class SecondForm extends Component
 {
-    public Temporal $temporal;
+    public Tramite $tramite;
     public $show_enco = false;
     public $type;
     public $nacionales;
@@ -67,7 +67,7 @@ class SecondForm extends Component
 
     public function save()
     {
-        $this->temporal->update([
+        $this->tramite->update([
 
             'motivos' => $this->motivos,
             'encomienda' => $this->encomienda,
@@ -76,7 +76,7 @@ class SecondForm extends Component
 
         session()->flash('message', 'Paso dos realizado');
 
-        return redirect()->route('temporary.create_third' , ['identf' => $this->temporal->identificador]);
+        return redirect()->route('temporary.create_third' , ['identf' => $this->tramite->identificador]);
         
     }
 }

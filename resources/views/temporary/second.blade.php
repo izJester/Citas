@@ -15,7 +15,7 @@
    <div class="flex justify-center mx-auto space-x-2 my-12">
        <div class="shadow w-1/2 p-6">
 
-         @livewire('second-form' , ['temporal' => $temporal])
+         @livewire('second-form' , ['tramite' => $temporal])
 
        </div>
        

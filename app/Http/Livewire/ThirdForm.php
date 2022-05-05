@@ -3,20 +3,21 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Temporal;
+use App\Models\Tramite;
 
 class ThirdForm extends Component
 {
-    public Temporal $temporal;
+    public Tramite $tramite;
 
     protected $listeners = ['token' => 'purchase'];
+
 
     public function purchase($value)
     {
         \Stripe\Stripe::setApiKey('sk_test_51Kfa3lCfO3YICm7hjPURPqXlRrSg63eGGdADzSMEC3HBnMAsDbRYMmSKWRECfv1xGDN7sT51Z92i7pxRfFizssBd00woUkHTIV');
         try {
             $charge = \Stripe\Charge::create([
-                'amount' => (int) $this->temporal->total,
+                'amount' => (int) $this->tramite->total,
                 'currency' => 'usd',
                 'description' => 'Tramite',
                 'source' => $value['token']['id'],

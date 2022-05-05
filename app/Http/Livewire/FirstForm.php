@@ -3,8 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Temporal;
-use App\Http\Controllers\TemporalController;
+use App\Models\Tramite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 
@@ -34,7 +33,7 @@ class FirstForm extends Component
     public function mount()
     { 
         $attempt = Str::random(9);
-        if (Temporal::where('identificador', $attempt)->exists()) {
+        if (Tramite::where('identificador', $attempt)->exists()) {
             $this->identificador = Str::random(9);
         } else {
             $this->identificador = $attempt;
@@ -45,7 +44,7 @@ class FirstForm extends Component
     {
         $this->validate();
 
-        $temporal = Temporal::create([
+        $tramite = Tramite::create([
             'identificador' => $this->identificador,
             'nombres' => $this->nombres,
             'apellidos' => $this->apellidos,
@@ -61,7 +60,7 @@ class FirstForm extends Component
         session()->flash('message', 'Primer Paso Realizado');
 
         $url = URL::temporarySignedRoute(
-            'temporary.create_second', now()->addMonth(), ['identf' => $temporal->identificador]
+            'temporary.create_second', now()->addMonth(), ['identf' => $tramite->identificador]
         );
 
         return redirect($url);
