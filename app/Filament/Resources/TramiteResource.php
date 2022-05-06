@@ -77,8 +77,9 @@ class TramiteResource extends Resource
     {
         return [
             'index' => Pages\ListTramites::route('/'),
-            'create' => Pages\CreateTramite::route('/create'),
-            'edit' => Pages\EditTramite::route('/{record}/edit'),
+            //'create' => Pages\CreateTramite::route('/create'),
+            'view' => Pages\ViewTramite::route('/{record}'),
+            //'edit' => Pages\EditTramite::route('/{record}/edit'),
         ];
     }
 }

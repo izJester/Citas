@@ -31,10 +31,12 @@ class Correos extends Page implements Forms\Contracts\HasForms
                             Forms\Components\TextInput::make('email')
                             ->email()
                             ->required()
-                            ->label('Correo'),
+                            ->label('Correo')
+                            ->placeholder('Introduce Aqui el Correo del Remitente'),
                             Forms\Components\RichEditor::make('content')
                             ->required()
-                            ->label('Contenido'),
+                            ->label('Contenido')
+                            ->placeholder('Introduce Aqui el Contenido del Correo'),
                         ])->columnSpan(12),
                   
                     
