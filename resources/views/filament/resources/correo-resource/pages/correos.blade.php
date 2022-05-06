@@ -3,8 +3,8 @@
 <form wire:submit.prevent="submit">
     {{ $this->form }}
  
-    <button class="bg-blue-400" type="submit">
-        Submit
-    </button>
+    <x-filament::button class=" mt-4" type="submit">
+        Enviar
+    </x-filament::button>
 
 </x-filament::page>
