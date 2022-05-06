@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Tramite;
+use Livewire\Component;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TramiteRegistradoConExito;
 
 class ThirdForm extends Component
 {
@@ -30,7 +32,8 @@ class ThirdForm extends Component
         }
         
           if ($charge->status == 'succeeded') {
-           dd('Tramite realizado con exito');
+            Mail::to($this->tramite->email)->send(new TramiteRegistradoConExito($this->tramite));
+            dd('Tramite realizado con exito');
         }
     }
 
