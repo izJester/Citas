@@ -14,7 +14,7 @@ class ThirdForm extends Component
 
     public function purchase($value)
     {
-        \Stripe\Stripe::setApiKey('sk_test_51Kfa3lCfO3YICm7hjPURPqXlRrSg63eGGdADzSMEC3HBnMAsDbRYMmSKWRECfv1xGDN7sT51Z92i7pxRfFizssBd00woUkHTIV');
+        \Stripe\Stripe::setApiKey( config('stripe.key') );
         try {
             $charge = \Stripe\Charge::create([
                 'amount' => (int) $this->tramite->total,
