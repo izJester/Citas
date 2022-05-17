@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTemporalRequest;
 use App\Http\Requests\UpdateTemporalRequest;
+use Illuminate\Http\Request;
 use App\Models\Tramite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
@@ -41,6 +42,20 @@ class TramiteController extends Controller
     {
         return view('temporary.third');
         
+    }
+
+    public function continue(Request $request)
+    {
+        $tramite = Tramite::where('identificador', $request->code)->first();
+        session(['code' => $request->code]);
+        if(session('secondStep') == true){
+            $url = URL::signedRoute('temporary.create_third');
+            return redirect($url);
+        }
+        if(empty($tramite->motivos) or session('firstStep') == true){
+            $url = URL::signedRoute('temporary.create_second');
+            return redirect($url);
+        }
     }
 
     /**

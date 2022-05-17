@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::controller(TramiteController::class)->group(function () {
     Route::get('/temporary-request', 'index')->name('temporary.index');
+    Route::post('/temporary-request', 'continue')->name('temporary.continue');
     Route::get('/temporary-request/create/f', 'create')->name('temporary.create')->middleware('signed');
     Route::get('/temporary-request/create/s', 'create_second')->name('temporary.create_second')->middleware('signed');
     Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
