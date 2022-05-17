@@ -4,10 +4,11 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Tramite;
+use Illuminate\Support\Facades\URL;
 
 class SecondForm extends Component
 {
-    public Tramite $tramite;
+    public $tramite;
     public $show_enco = false;
     public $type;
     public $nacionales;
@@ -19,6 +20,7 @@ class SecondForm extends Component
 
     public function mount()
     {
+        $this->tramite = Tramite::where('identificador', session('code'))->first();
         $this->nacionales = [
             ['id' => '1', 'nombre' => 'Impresion Certificado' , 'price' => '0.427'],
             ['id' => '2', 'nombre' => 'Record Academico' , 'price' => '0.53'],
@@ -75,8 +77,11 @@ class SecondForm extends Component
         ]);
 
         session()->flash('message', 'Paso dos realizado');
+        session(['secondStep' => true]);
 
-        return redirect()->route('temporary.create_third' , ['identf' => $this->tramite->identificador]);
+        $url = URL::signedRoute('temporary.create_third');
+
+        return redirect($url);
         
     }
 }

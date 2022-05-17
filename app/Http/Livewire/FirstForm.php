@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\Tramite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Squire\Models\Country;
 
 class FirstForm extends Component
 {
-    public $identificador;
+    public $paises;
+    public $pais;
     public $nombres;
     public $apellidos;
     public $tipo_cedula;
@@ -32,12 +34,7 @@ class FirstForm extends Component
 
     public function mount()
     { 
-        $attempt = Str::random(9);
-        if (Tramite::where('identificador', $attempt)->exists()) {
-            $this->identificador = Str::random(9);
-        } else {
-            $this->identificador = $attempt;
-        }
+        $this->paises = Country::all();
     }
 
     public function store()
@@ -45,7 +42,7 @@ class FirstForm extends Component
         $this->validate();
 
         $tramite = Tramite::create([
-            'identificador' => $this->identificador,
+            'identificador' => session('code'),
             'nombres' => $this->nombres,
             'apellidos' => $this->apellidos,
             'tipo_cedula' => $this->tipo_cedula,
@@ -53,17 +50,16 @@ class FirstForm extends Component
             'direccion' => $this->direccion,
             'telefono' => $this->telefono,
             'email' => $this->email,
+            'pais' => $this->pais,
             'fecha_nacimiento' => $this->fecha_nacimiento,
 
         ]);
 
         session()->flash('message', 'Primer Paso Realizado');
-
-        $url = URL::temporarySignedRoute(
-            'temporary.create_second', now()->addMonth(), ['identf' => $tramite->identificador]
-        );
-
+        session(['firstStep' => true]);
+        $url = URL::signedRoute('temporary.create_second');
         return redirect($url);
         
     }
+
 }

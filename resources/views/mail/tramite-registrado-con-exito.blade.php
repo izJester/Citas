@@ -15,8 +15,8 @@
 	</p>
     <table style="border: 0; margin: 1em" border="0" cellpadding="2" cellspacing="2" width="100%">
 		<tr>
-			<td align="right" style="text-align: right;"><b>Enlace de seguimiento: </b></td>
-			<td><a href="#"> COLOCAR AQUI ENLACE DE SEGUIMIENTO</a></td>
+			<td align="right" style="text-align: right;"><b>Comprobante de Pago: </b></td>
+			<td><a href="{{ $url }}">Enlace</a></td>
 		</tr>
 		<tr>
 			<td align="right" style="text-align: right;"><b>Código identificador: </b></td>

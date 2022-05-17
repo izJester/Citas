@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTemporalRequest;
 use App\Http\Requests\UpdateTemporalRequest;
 use App\Models\Tramite;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class TramiteController extends Controller
 {
@@ -15,7 +17,9 @@ class TramiteController extends Controller
      */
     public function index()
     {
-        return view('temporary.index');
+        session(['code' => Str::random(9)]);
+        $url = URL::signedRoute('temporary.create');
+        return view('temporary.index' , compact('url'));
     }
 
     /**
@@ -23,21 +27,19 @@ class TramiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($identf = null)
+    public function create()
     {
         return view('temporary.create');
     }
 
-    public function create_second($identf)
+    public function create_second()
     {
-        return view('temporary.second' , 
-        ['temporal' => Tramite::where('identificador', $identf)->first()]);
+        return view('temporary.second');
     }
 
-    public function create_third($identf)
+    public function create_third()
     {
-        return view('temporary.third' , 
-        ['temporal' => Tramite::where('identificador', $identf)->first()]);
+        return view('temporary.third');
         
     }
 

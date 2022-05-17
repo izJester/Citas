@@ -1,4 +1,7 @@
 <div>
+<div class="flex justify-end px-6">
+        <span>ID: <span class="font-semibold text-gray-400">{{ session('code') }}</span></span>
+    </div>
 <div class="p-4 mb-4" id="card"></div>
 
 <div class="flex justify-end mb-4">

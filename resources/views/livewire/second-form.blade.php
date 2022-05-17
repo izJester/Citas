@@ -1,4 +1,7 @@
 <div>
+<div class="flex justify-end px-6">
+        <span>ID: <span class="font-semibold text-gray-400">{{ session('code') }}</span></span>
+    </div>
 <form wire:submit.prevent="save">
 <div class="relative z-0 w-full mb-6 group">
         

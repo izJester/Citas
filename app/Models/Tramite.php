@@ -18,6 +18,7 @@ class Tramite extends Model
         'direccion',
         'telefono',
         'email',
+        'pais',
         'fecha_nacimiento',
         'motivos',
         'encomienda',

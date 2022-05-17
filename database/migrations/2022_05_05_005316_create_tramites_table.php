@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();
             $table->string('email')->nullable()->unique();
+            $table->string('pais')->nullable();
             $table->timestamp('fecha_nacimiento')->nullable();
             $table->json('motivos')->nullable();
             $table->boolean('encomienda')->nullable();

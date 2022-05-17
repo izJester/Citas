@@ -20,9 +20,21 @@ Route::get('/', function () {
 
 Route::controller(TramiteController::class)->group(function () {
     Route::get('/temporary-request', 'index')->name('temporary.index');
-    Route::get('/temporary-request/create/f/{identf?}', 'create')->name('temporary.create');
-    Route::get('/temporary-request/create/s/{identf}', 'create_second')->name('temporary.create_second')->middleware('signed');
-    Route::get('/temporary-request/create/t/{identf}' , 'create_third')->name('temporary.create_third');
+    Route::get('/temporary-request/create/f', 'create')->name('temporary.create')->middleware('signed');
+    Route::get('/temporary-request/create/s', 'create_second')->name('temporary.create_second')->middleware('signed');
+    Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
+});
+
+Route::get('/prueba', function () {
+    return view('welcome');
+});
+
+Route::get('/success' , function(){
+    return view('temporary.success');
+});
+
+Route::get('/fail' , function(){
+    return view('temporary.fail');
 });
 
 Route::middleware([

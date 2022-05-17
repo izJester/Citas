@@ -9,9 +9,14 @@ use App\Mail\TramiteRegistradoConExito;
 
 class ThirdForm extends Component
 {
-    public Tramite $tramite;
+    public $tramite;
 
     protected $listeners = ['token' => 'purchase'];
+
+    public function mount()
+    {
+        $this->tramite = Tramite::where('identificador' , session('code'))->first();
+    }
 
 
     public function purchase($value)
@@ -19,21 +24,22 @@ class ThirdForm extends Component
         \Stripe\Stripe::setApiKey( config('stripe.key') );
         try {
             $charge = \Stripe\Charge::create([
-                'amount' => (int) $this->tramite->total,
+                'amount' => round(str_replace( ',' , '' , $this->tramite->total) / 4.95),
                 'currency' => 'usd',
                 'description' => 'Tramite',
                 'source' => $value['token']['id'],
               ]);
         } catch (\Stripe\Exception\CardException $e) {
-            dd($e->getMessage());
+            dd($e);
         }
         catch (\Stripe\Exception\InvalidRequestException $e) {
-            dd($e->getMessage());
+            dd($e);
         }
         
           if ($charge->status == 'succeeded') {
-            Mail::to($this->tramite->email)->send(new TramiteRegistradoConExito($this->tramite));
-            dd('Tramite realizado con exito');
+            session()->flush();
+            Mail::to($this->tramite->email)->send(new TramiteRegistradoConExito($this->tramite, $charge->receipt_url));
+            return redirect('/success');
         }
     }
 

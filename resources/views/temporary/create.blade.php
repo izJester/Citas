@@ -1,17 +1,11 @@
 <x-guest-layout>
-  @php($second = false)
-   <div class="flex justify-center mx-auto space-x-2 my-12">
-       <div class="shadow w-1/2 p-6">
-
-         @livewire('first-form')
-
-       </div>
-       
-       @if($second)
-       <div class="shadow w-auto p-6">
-         <h3>Aspectos a tomar en cuenta</h3>
-       </div>
-       @endif
-
-   </div>
+       <div class="flex space-x-2 my-12">
+           @livewire('check-sidebar' , ['step' => 1])
+                <div class="w-full p-6">
+                    <div class="p-6 shadow">
+                       @livewire('first-form')
+                    </div>
+                </div>
+            </div>
 </x-guest-layout>
+
