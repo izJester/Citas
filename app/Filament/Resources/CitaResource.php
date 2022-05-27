@@ -32,9 +32,15 @@ class CitaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('cedula')
-                    ->sortable()
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('tramite.nombres')
+                    ->searchable()
+                    ->label('Nombres'),
+                Tables\Columns\TextColumn::make('tramite.apellidos')
+                    ->searchable()
+                    ->label('Apellidos'),
+                Tables\Columns\TextColumn::make('tramite.direccion')
+                    ->searchable()
+                    ->label('Dirección'),
                 Tables\Columns\TextColumn::make('fecha'),
             ])
             ->filters([

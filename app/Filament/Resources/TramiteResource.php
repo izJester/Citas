@@ -52,8 +52,6 @@ class TramiteResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombres'),
                 Tables\Columns\TextColumn::make('apellidos'),
-                Tables\Columns\TextColumn::make('tipo_cedula'),
-                Tables\Columns\TextColumn::make('cedula'),
                 Tables\Columns\TextColumn::make('direccion'),
                 Tables\Columns\TextColumn::make('telefono'),
                 Tables\Columns\TextColumn::make('email'),
@@ -63,6 +61,12 @@ class TramiteResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->actions([
+                Tables\Actions\Action::make('crear')
+                    ->label('Crear cita')
+                    ->url(fn (Tramite $record): string => route('filament.resources.tramites.create_cita', $record))
+                    ->icon('heroicon-s-plus')
             ]);
     }
     
@@ -77,9 +81,9 @@ class TramiteResource extends Resource
     {
         return [
             'index' => Pages\ListTramites::route('/'),
-            'create' => Pages\Citas::route('/create'),
             'view' => Pages\ViewTramite::route('/{record}'),
             //'edit' => Pages\EditTramite::route('/{record}/edit'),
+            'create_cita' => Pages\CrearCita::route('/crear-cita/{record}'),
         ];
     }
 }

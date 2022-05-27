@@ -58,6 +58,11 @@ class TramiteController extends Controller
         }
     }
 
+    public function viewEstatus()
+    {
+        return view('temporary.estatus');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

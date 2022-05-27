@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
-            $table->string('cedula')->unique();
+            $table->string('tramite_id');
             $table->date('fecha');
             $table->timestamps();
         });

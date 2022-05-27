@@ -26,6 +26,13 @@ class FirstForm extends Component
         'apellidos' => 'required',
     ];
 
+    protected $listeners = ['echo:prueba,Prueba' => 'prueba'];
+
+    public function prueba()
+    {
+        $this->nombres = 'prueba';
+    }
+
 
     public function render()
     {

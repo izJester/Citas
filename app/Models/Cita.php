@@ -10,11 +10,16 @@ class Cita extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cedula',
+        'tramite_id',
         'fecha',
     ];
 
     protected $cast = [
         'fecha' => 'date',
     ];
+
+    public function tramite()
+    {
+        return $this->belongsTo(Tramite::class);
+    }
 }

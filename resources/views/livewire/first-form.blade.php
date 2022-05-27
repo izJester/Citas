@@ -3,6 +3,7 @@
         <span>ID: <span class="font-semibold text-gray-400">{{ session('code') }}</span></span>
     </div>
 <form wire:submit.prevent="store">
+<span>{{ $nombres }}</span>
     <div class="grid gap-6 mb-6 lg:grid-cols-2">
         <div>
             <label for="nombres" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombres</label>
