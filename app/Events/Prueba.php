@@ -31,7 +31,19 @@ class Prueba implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('prueba');
+        return ['my-channel'];
+    }
+
+    public function broadcastAs()
+    {
+        return 'my-event';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'mensaje' => 'Hola mundo desde el evento'
+        ];
     }
 
 }

@@ -33,16 +33,6 @@ class TramiteController extends Controller
         return view('temporary.create');
     }
 
-    public function create_second()
-    {
-        return view('temporary.second');
-    }
-
-    public function create_third()
-    {
-        return view('temporary.third');
-        
-    }
 
     public function continue(Request $request)
     {
