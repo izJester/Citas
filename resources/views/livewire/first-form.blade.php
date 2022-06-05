@@ -3,7 +3,6 @@
         <span>ID: <span class="font-semibold text-gray-400">{{ session('code') }}</span></span>
     </div>
 <form wire:submit.prevent="store">
-<span>{{ $nombres }}</span>
     <div class="grid gap-6 mb-6 lg:grid-cols-2">
         <div>
             <label for="nombres" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombres</label>
@@ -12,6 +11,33 @@
         <div>
             <label for="apellidos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Apellidos</label>
             <input wire:model="apellidos" type="text" id="apellidos" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe Malcolm" required>
+        </div>
+        <div>
+            <label for="tipo_cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tipo de Documento</label>
+            <select wire:model="tipo_cedula" id="tipo_cedula" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected hidden>Selecciona una opcion</option>
+                <option value="V">V</option>
+                <option value="E">E</option>
+                <option value="E">R</option>
+
+            </select>   
+        </div>
+        <div>
+            <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Documento de Identidad</label>
+            <input wire:model="cedula" type="text" id="cedula" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej: 24556434" required>
+        </div>
+        <div>
+            <label for="nucleo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nucleo</label>
+            <select wire:model="nucleo" id="nucleo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected hidden>Selecciona una opcion</option>
+                <option value="chuao">Chuao</option>
+                <option value="guatire">Guatire</option>
+
+            </select>   
+        </div>
+        <div>
+            <label for="carrera" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Carrera</label>
+            <input wire:model="carrera" type="text" id="carrera" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ej: Ing de Sistemas" required>
         </div>
         <div>
             <label for="correo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Correo</label>

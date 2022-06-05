@@ -28,6 +28,7 @@ return new class extends Migration
             $table->json('motivos')->nullable();
             $table->boolean('encomienda')->nullable();
             $table->string('nucleo')->nullable();
+            $table->string('carrera')->nullable();
             $table->string('total')->nullable();
             $table->timestamps();
         });

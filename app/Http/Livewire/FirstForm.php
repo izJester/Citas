@@ -20,19 +20,13 @@ class FirstForm extends Component
     public $telefono;
     public $email;
     public $fecha_nacimiento;
+    public $nucleo;
+    public $carrera;
 
     protected $rules = [
         'nombres' => 'required',
         'apellidos' => 'required',
     ];
-
-    protected $listeners = ['echo:prueba,Prueba' => 'prueba'];
-
-    public function prueba()
-    {
-        $this->nombres = 'prueba';
-    }
-
 
     public function render()
     {
@@ -59,6 +53,8 @@ class FirstForm extends Component
             'email' => $this->email,
             'pais' => $this->pais,
             'fecha_nacimiento' => $this->fecha_nacimiento,
+            'nucleo' => $this->nucleo,
+            'carrera' => $this->carrera,
 
         ]);
 
