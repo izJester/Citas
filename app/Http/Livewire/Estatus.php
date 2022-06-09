@@ -23,6 +23,6 @@ class Estatus extends Component
     {
         $this->validate();
 
-        $this->result = Tramite::search($this->search)->first();
+        $this->result = Tramite::where('identificador' , $this->search)->with('cita')->first();
     }
 }

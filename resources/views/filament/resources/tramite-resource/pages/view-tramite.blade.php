@@ -5,6 +5,10 @@
    <div class="flex flex-col">
       <span class="font-bold text-lg tracking-wide">{{ $record->nombres }} {{ $record->apellidos }}</span>
       <span>{{ $record->tipo_cedula }}-{{ $record->cedula }}</span>
+      <span>Fecha de Egreso: {{ $record->fecha_nacimiento }}</span>
+      <span>Telefono: {{ $record->telefono }}</span>
+      <span>{{ $record->email }}</span>
+      <span>{{ $record->identificador }}</span>
    </div>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

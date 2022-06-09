@@ -17,6 +17,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
     public $fecha;
     public $tramite;
     public $record;
+    public $estatus;
 
     public function mount()
     {
@@ -30,8 +31,15 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
                         ->schema([
                           
                             Forms\Components\DatePicker::make('fecha')
+                                ->label('Fecha de la cita'),
+                            Forms\Components\Select::make('estatus')
                                 ->required()
-                                ->label('Fecha de la cita')
+                                ->label('Estatus')
+                                ->options([
+                                    'Pendiente' => 'Pendiente',
+                                    'Cancelada' => 'Cancelada',
+                                    'Realizada' => 'Realizada',
+                                ]),
                         ]),
         ];
     }
@@ -42,6 +50,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
         Cita::create([
             'tramite_id' => $this->tramite->id,
             'fecha' => $this->fecha,
+            'estatus' => $this->estatus,
         ]);
 
         $this->notify('success', 'Cita creada');

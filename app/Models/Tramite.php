@@ -32,16 +32,7 @@ class Tramite extends Model
     protected $casts = [
         'motivos' => 'array',
     ];
-
-    public function getMotivosAttribute($value)
-    {
-        $a = json_decode($value);  
-        $motivos = [];
-        foreach ($a as $motivo) {
-            $motivos[] = json_decode($motivo);
-        }
-        return $motivos;
-    }
+ 
 
     public function cita()
     {

@@ -7,7 +7,7 @@ use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
 use App\Models\Tramite;
 
-class ViewTramite extends Page
+class VerTramite extends Page
 {
 
     public Tramite $record;

@@ -52,7 +52,6 @@ class TramiteResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombres'),
                 Tables\Columns\TextColumn::make('apellidos'),
-                Tables\Columns\TextColumn::make('direccion'),
                 Tables\Columns\TextColumn::make('telefono'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('fecha_nacimiento')
@@ -81,7 +80,7 @@ class TramiteResource extends Resource
     {
         return [
             'index' => Pages\ListTramites::route('/'),
-            'view' => Pages\ViewTramite::route('/{record}'),
+            'view' => Pages\VerTramite::route('/{record}'),
             //'edit' => Pages\EditTramite::route('/{record}/edit'),
             'create_cita' => Pages\CrearCita::route('/crear-cita/{record}'),
         ];
