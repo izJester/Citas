@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TramiteController;
-use App\Events\Prueba;
+use App\Models\Tramite;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,17 +29,22 @@ Route::controller(TramiteController::class)->group(function () {
     //Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
 });
 
-Route::get('/prueba', function () {
-    event(new Prueba());
+Route::get('/billing', function () {
+    $tramite = Tramite::first();
+    //$stripeCustomer = $tramite->createAsStripeCustomer();
+    return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6'] , [
+        'success_url' => route('success'),
+        'cancel_url' => URL::signedRoute('temporary.create'),
+    ]);
 });
 
 Route::get('/success' , function(){
     return view('temporary.success');
-});
+})->name('success');
 
 Route::get('/fail' , function(){
     return view('temporary.fail');
-});
+})->name('fail');
 
 Route::middleware([
     'auth:sanctum',

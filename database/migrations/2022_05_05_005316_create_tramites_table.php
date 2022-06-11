@@ -24,10 +24,11 @@ return new class extends Migration
             $table->string('telefono')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('pais')->nullable();
-            $table->timestamp('fecha_nacimiento')->nullable();
+            $table->timestamp('fecha_egreso')->nullable();
             $table->json('motivos')->nullable();
             $table->boolean('encomienda')->nullable();
             $table->string('nucleo')->nullable();
+            $table->string('carrera')->nullable();
             $table->string('total')->nullable();
             $table->timestamps();
         });
