@@ -32,7 +32,7 @@ Route::controller(TramiteController::class)->group(function () {
 Route::get('/billing', function () {
     $tramite = Tramite::first();
     //$stripeCustomer = $tramite->createAsStripeCustomer();
-    return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6'] , [
+    return $tramite->checkoutCharge(1200, 'T-Shirt', 5 , [
         'success_url' => route('success'),
         'cancel_url' => URL::signedRoute('temporary.create'),
     ]);

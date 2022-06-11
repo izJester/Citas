@@ -107,6 +107,10 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                     ->description('Nacional o Internacional')
                     ->icon('heroicon-o-shopping-bag')
                     ->schema([
+                        Forms\Components\Toggle::make('encomienda')
+                            ->label('Quieres agregar el arancel de encomienda?')
+                            ->required()
+                            ->default(false),
                         Forms\Components\Repeater::make('motivos')
                             ->schema([
                                 Forms\Components\Select::make('tipo')
@@ -130,11 +134,13 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                     ->label('Cantidad')
                                     ->required()
                                 
-                        ])->columnSpan(2)->columns(3)
+                        ])->columnSpan(2)->columns(3),
+
+
                     ]),
             ])
             ->columns(2)
-            ->submitAction(new HtmlString('<button type="submit" class="bg-primary-600 font-bold rounded px-4 py-1 text-white">Proceder con el pago</button>')),
+            ->submitAction(new HtmlString('<button type="submit" class="bg-primary-600 font-bold rounded px-4 py-1 text-white"> Proceder con el pago</button>')),
 
         ];
     }
