@@ -32,11 +32,7 @@
         <tr>
 			<td align="right" style="text-align: right;"><b>Documentos solicitados: </b></td>
 			<td>
-                <ul style="margin-left: 0 !important">
-                    @foreach ($tramite->motivos as $documento)
-                    <li>{{ json_decode($documento)->nombre }}</li>
-                    @endforeach
-                </ul>
+
             </td>
 		</tr>
 	</table>
