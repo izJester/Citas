@@ -150,7 +150,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
     public function submit()
     {
         $tramite = Tramite::create($this->form->getState());
-        Mail::to($this->email)->send(new TramiteRegistradoConExito($tramite->id));
+        Mail::to($this->email)->send(new TramiteRegistradoConExito($tramite));
         if (empty($tramite->stripe_id)) {
             $stripeCustomer = $tramite->createAsStripeCustomer();
         }
