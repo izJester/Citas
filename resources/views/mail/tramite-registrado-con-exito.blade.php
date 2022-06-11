@@ -14,10 +14,10 @@
 		A fin de proveer un mejor control y calidad de servicio en la gestión de sus solicitudes se adjunta el resumen de los documentos solicitados
 	</p>
     <table style="border: 0; margin: 1em" border="0" cellpadding="2" cellspacing="2" width="100%">
-		<tr>
+		<!-- <tr>
 			<td align="right" style="text-align: right;"><b>Comprobante de Pago: </b></td>
 			<td><a href="{{ $url }}">Enlace</a></td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td align="right" style="text-align: right;"><b>Código identificador: </b></td>
 			<td>{{ $tramite->identificador }}</td>

@@ -13,17 +13,15 @@ class TramiteRegistradoConExito extends Mailable
     use Queueable, SerializesModels;
 
     public $tramite;
-    public $url;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Tramite $tramite , $url)
+    public function __construct(Tramite $tramite)
     {
         $this->tramite = $tramite;
-        $this->url = $url;
     }
 
     /**

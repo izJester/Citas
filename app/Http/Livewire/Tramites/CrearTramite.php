@@ -10,6 +10,8 @@ use App\Models\Tramite;
 use Squire\Models\Country;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TramiteRegistradoConExito;
 
 class CrearTramite extends Component implements Forms\Contracts\HasForms
 {
@@ -148,6 +150,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
     public function submit()
     {
         $tramite = Tramite::create($this->form->getState());
+        Mail::to($this->email)->send(new TramiteRegistradoConExito($this->tramite->id));
         if (empty($tramite->stripe_id)) {
             $stripeCustomer = $tramite->createAsStripeCustomer();
         }
