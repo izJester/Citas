@@ -42,14 +42,14 @@ Route::get('/billing', function () {
 });
 
 Route::get('/success' , function(){
-    $tramite = Tramite::find(request('tramite'));
+    $tramite = Tramite::where('id' , request('tramite'))->first();
     $tramite->update(['pago' => true]);
     Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
     return view('temporary.success');
 })->name('success');
 
 Route::get('/fail' , function(){
-    $tramite = Tramite::find(request('tramite'));
+    $tramite = Tramite::where('id' , request('tramite'))->first();
     $tramite->delete();
     return redirect('/');
 })->name('fail');

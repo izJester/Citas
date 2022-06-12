@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tramites', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('identificador')->unique();
             $table->string('nombres')->nullable();
             $table->string('apellidos')->nullable();

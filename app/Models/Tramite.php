@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Laravel\Cashier\Billable;
+use App\Traits\Uuid;
 
 class Tramite extends Model
 {
     use HasFactory;
     use Searchable;
     use Billable;
+    use Uuid;
 
     protected $fillable = [
         'identificador',
