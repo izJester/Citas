@@ -10,8 +10,6 @@ use App\Models\Tramite;
 use Squire\Models\Country;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TramiteRegistradoConExito;
 
 class CrearTramite extends Component implements Forms\Contracts\HasForms
 {
@@ -52,9 +50,11 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ->required(),
                         Forms\Components\TextInput::make('apellidos')
                             ->label('Apellidos')
+                            ->default(old('apellidos'))
                             ->required(),
                         Forms\Components\Select::make('tipo_cedula')
                             ->label('Tipo de Cedula')
+                            ->default(old('tipo_cedula'))
                             ->required()
                             ->options([
                                 'V' => 'V',
@@ -63,9 +63,11 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ]),
                         Forms\Components\TextInput::make('cedula')
                             ->label('Cedula')
+                            ->default(old('cedula'))
                             ->required(),
                         Forms\Components\Select::make('nucleo')
                             ->label('Nucleo')
+                            ->default(old('nucleo'))
                             ->required()
                             ->options([
                                 'chuao' => 'Chuao',
@@ -75,6 +77,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ]),
                         Forms\Components\Select::make('carrera')
                             ->label('Carrera')
+                            ->default(old('carrera'))
                             ->required()
                             ->options([
                                 'sistemas' => 'Ing de Sistemas',
@@ -85,20 +88,26 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ]),
                         Forms\Components\TextInput::make('direccion')
                             ->label('Direccion')
+                            ->default(old('direccion'))
                             ->required(),
                         Forms\Components\TextInput::make('telefono')
+                            ->rules(['numeric', 'digits:11'])
+                            ->default(old('telefono'))
                             ->label('Telefono')
                             ->required(),
                         Forms\Components\TextInput::make('email')
                             ->label('Email')
+                            ->default(old('email'))
                             ->required()
                             ->email(),
                         Forms\Components\Select::make('pais')
                             ->label('Pais')
+                            ->default(old('pais'))
                             ->required()
                             ->options($this->paises->pluck('name', 'name')),
                         Forms\Components\DatePicker::make('fecha_egreso')
                             ->label('Fecha de Egreso')
+                            ->default(old('fecha_egreso'))
                             ->required()
                             ->displayFormat('d/m/Y')
                             ->columnSpan(2),
@@ -111,7 +120,6 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                     ->schema([
                         Forms\Components\Toggle::make('encomienda')
                             ->label('Quieres agregar el arancel de encomienda?')
-                            ->required()
                             ->default(false),
                         Forms\Components\Repeater::make('motivos')
                             ->schema([
@@ -133,10 +141,14 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                     
                                     ]),
                                     Forms\Components\TextInput::make('cantidad')
+                                    ->rules(['numeric', 'max:5'])
                                     ->label('Cantidad')
                                     ->required()
                                 
-                        ])->columnSpan(2)->columns(3),
+                        ])
+                        ->columnSpan(2)
+                        ->columns(3)
+                        ->createItemButtonLabel('Añadir otro motivo'),
 
 
                     ]),
@@ -150,14 +162,13 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
     public function submit()
     {
         $tramite = Tramite::create($this->form->getState());
-        Mail::to($this->email)->send(new TramiteRegistradoConExito($tramite));
         if (empty($tramite->stripe_id)) {
-            $stripeCustomer = $tramite->createAsStripeCustomer();
+            $tramite->createAsStripeCustomer();
         }
 
         return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6'] , [
-            'success_url' => route('success'),
-            'cancel_url' => URL::signedRoute('temporary.create'),
+            'success_url' => route('success') . '?tramite=' . $tramite->id,
+            'cancel_url' => route('fail') . '?tramite=' . $tramite->id,
         ]);
     }
 

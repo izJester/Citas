@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TramiteController;
 use App\Models\Tramite;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TramiteRegistradoConExito;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,18 +35,23 @@ Route::controller(TramiteController::class)->group(function () {
 Route::get('/billing', function () {
     $tramite = Tramite::first();
     //$stripeCustomer = $tramite->createAsStripeCustomer();
-    return $tramite->checkoutCharge(1200, 'T-Shirt', 5 , [
+    return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6' => 2], [
         'success_url' => route('success'),
         'cancel_url' => URL::signedRoute('temporary.create'),
     ]);
 });
 
 Route::get('/success' , function(){
+    $tramite = Tramite::find(request('tramite'));
+    $tramite->update(['pago' => true]);
+    Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
     return view('temporary.success');
 })->name('success');
 
 Route::get('/fail' , function(){
-    return view('temporary.fail');
+    $tramite = Tramite::find(request('tramite'));
+    $tramite->delete();
+    return redirect('/');
 })->name('fail');
 
 Route::middleware([

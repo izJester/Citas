@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('encomienda')->nullable();
             $table->string('nucleo')->nullable();
             $table->string('carrera')->nullable();
+            $table->boolean('pago')->nullable();
             $table->string('total')->nullable();
             $table->timestamps();
         });
