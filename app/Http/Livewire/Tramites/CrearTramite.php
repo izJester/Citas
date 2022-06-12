@@ -42,7 +42,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
             Wizard::make([
                 Wizard\Step::make('Datos')
                     ->description('Personales y Academicos')
-                    ->icon('heroicon-o-shopping-bag')
+                    ->icon('heroicon-o-academic-cap')
                     ->schema([
                         Forms\Components\TextInput::make('nombres')
                             ->label('Nombres')
@@ -53,20 +53,20 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ->default(old('apellidos'))
                             ->required(),
                         Forms\Components\Select::make('tipo_cedula')
-                            ->label('Tipo de Cedula')
+                            ->label('Tipo de documento de identidad')
                             ->default(old('tipo_cedula'))
                             ->required()
                             ->options([
-                                'V' => 'V',
-                                'E' => 'E',
-                                'R' => 'R',
+                                'V' => 'Venezolano',
+                                'E' => 'Extranjero',
+                                'P' => 'Pasaporte',
                             ]),
                         Forms\Components\TextInput::make('cedula')
-                            ->label('Cedula')
+                            ->label('Número de documento de identidad')
                             ->default(old('cedula'))
                             ->required(),
                         Forms\Components\Select::make('nucleo')
-                            ->label('Nucleo')
+                            ->label('Núcleo')
                             ->default(old('nucleo'))
                             ->required()
                             ->options([
@@ -76,7 +76,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                 'teques' => 'Los Teques'
                             ]),
                         Forms\Components\Select::make('carrera')
-                            ->label('Carrera')
+                            ->label('Carrera cursada')
                             ->default(old('carrera'))
                             ->required()
                             ->options([
@@ -87,21 +87,21 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                 'turismo' => 'Turismo'
                             ]),
                         Forms\Components\TextInput::make('direccion')
-                            ->label('Direccion')
+                            ->label('Dirección')
                             ->default(old('direccion'))
                             ->required(),
                         Forms\Components\TextInput::make('telefono')
                             ->rules(['numeric', 'digits:11'])
                             ->default(old('telefono'))
-                            ->label('Telefono')
+                            ->label('Número de teléfono')
                             ->required(),
                         Forms\Components\TextInput::make('email')
-                            ->label('Email')
+                            ->label('Correo electrónico')
                             ->default(old('email'))
                             ->required()
                             ->email(),
                         Forms\Components\Select::make('pais')
-                            ->label('Pais')
+                            ->label('País de origen / Nacionlidad')
                             ->default(old('pais'))
                             ->required()
                             ->options($this->paises->pluck('name', 'name')),
@@ -114,17 +114,18 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                         Forms\Components\Hidden::make('identificador')->default(session('code')),
 
                     ]),
-                Wizard\Step::make('Tipo de Tramite')
+                Wizard\Step::make('Trámites a solicitar')
                     ->description('Nacional o Internacional')
-                    ->icon('heroicon-o-shopping-bag')
+                    ->icon('heroicon-o-qrcode')
                     ->schema([
                         Forms\Components\Toggle::make('encomienda')
-                            ->label('Quieres agregar el arancel de encomienda?')
+                            ->label('¿Desea agregar el arencel de encomienda?')
                             ->default(false),
                         Forms\Components\Repeater::make('motivos')
+                            ->label('Documentos a solicitar')
                             ->schema([
                                 Forms\Components\Select::make('tipo')
-                                    ->label('Tipo de Tramite')
+                                    ->label('Modalidad del Trámite')
                                     ->required()
                                     ->options([
                                         'Nacional' => 'Nacional',
@@ -132,7 +133,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                     
                                     ]),
                                     Forms\Components\Select::make('motivo')
-                                    ->label('Motivo')
+                                    ->label('Documento')
                                     ->required()
                                     ->options([
                                         'Notas Certificadas' => 'Notas Certificadas',
@@ -142,13 +143,13 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                     ]),
                                     Forms\Components\TextInput::make('cantidad')
                                     ->rules(['numeric', 'max:5'])
-                                    ->label('Cantidad')
+                                    ->label('Cantidad requerida')
                                     ->required()
                                 
                         ])
                         ->columnSpan(2)
                         ->columns(3)
-                        ->createItemButtonLabel('Añadir otro motivo'),
+                        ->createItemButtonLabel('Añadir otro documento'),
 
 
                     ]),
