@@ -36,6 +36,10 @@ class Tramite extends Model
         'motivos' => 'array',
     ];
 
+    protected $hidden = [
+        'stripe_id',
+    ];
+
     public function cita()
     {
         return $this->hasOne(Cita::class);

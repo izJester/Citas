@@ -17,6 +17,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
     public $fecha;
     public $tramite;
     public $record;
+    public $estatus;
 
     public function mount()
     {
@@ -31,7 +32,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
                           
                             Forms\Components\DatePicker::make('fecha')
                                 ->required()
-                                ->label('Fecha de la cita')
+                                ->label('Fecha de la cita'),
                         ]),
         ];
     }

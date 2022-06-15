@@ -8,11 +8,7 @@ use App\Models\Tramite;
 class Estatus extends Component
 {
     public $search;
-    public $result;
-
-    protected $rules = [
-        'search' => 'required',
-    ];
+    public $result = 'default';
 
     public function render()
     {
@@ -21,8 +17,6 @@ class Estatus extends Component
 
     public function search()
     {
-        $this->validate();
-
-        $this->result = Tramite::search($this->search)->first();
+        $this->result = Tramite::where('identificador' , $this->search)->with('cita')->first();
     }
 }

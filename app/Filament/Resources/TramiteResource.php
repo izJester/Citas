@@ -40,7 +40,7 @@ class TramiteResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('fecha_nacimiento'),
+                Forms\Components\DateTimePicker::make('fecha_egreso'),
                 Forms\Components\Textarea::make('motivos'),
                 Forms\Components\Toggle::make('encomienda'),
             ]);
@@ -50,12 +50,16 @@ class TramiteResource extends Resource
     {
         return $table 
             ->columns([
-                Tables\Columns\TextColumn::make('nombres'),
-                Tables\Columns\TextColumn::make('apellidos'),
-                Tables\Columns\TextColumn::make('direccion'),
+                Tables\Columns\TextColumn::make('nombres')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('apellidos')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('telefono'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('fecha_nacimiento')
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('fecha_egreso')
                     ->dateTime(),
                 Tables\Columns\BooleanColumn::make('encomienda'),
             ])

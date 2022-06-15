@@ -24,7 +24,19 @@ class CitaResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\DatePicker::make('fecha')
+                            ->label('Fecha de la cita'),
+                        Forms\Components\Select::make('estatus')
+                            ->required()
+                            ->label('Estatus')
+                            ->options([
+                                'Pendiente' => 'Pendiente',
+                                'Cancelada' => 'Cancelada',
+                                'Realizada' => 'Realizada',
+                            ]),
+                    ]),
             ]);
     }
 
@@ -38,9 +50,7 @@ class CitaResource extends Resource
                 Tables\Columns\TextColumn::make('tramite.apellidos')
                     ->searchable()
                     ->label('Apellidos'),
-                Tables\Columns\TextColumn::make('tramite.direccion')
-                    ->searchable()
-                    ->label('Dirección'),
+                Tables\Columns\TextColumn::make('estatus'),
                 Tables\Columns\TextColumn::make('fecha'),
             ])
             ->filters([
@@ -70,7 +80,7 @@ class CitaResource extends Resource
         return [
             'index' => Pages\ListCitas::route('/'),
             //'create' => Pages\CreateCita::route('/create'),
-            //'edit' => Pages\EditCita::route('/{record}/edit'),
+            'edit' => Pages\EditCita::route('/{record}/edit'),
         ];
     }
 }

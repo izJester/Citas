@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('tramite_id');
             $table->date('fecha');
+            $table->string('estatus')->default('Pendiente');
             $table->timestamps();
         });
     }
