@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TramiteRegistradoConExito;
 
+use App\Classes\IpgBdv;
+use App\Classes\IpgBdvPaymentRequest;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,25 +35,18 @@ Route::controller(TramiteController::class)->group(function () {
     //Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
 });
 
-Route::get('/billing', function () {
-    $tramite = Tramite::first();
-    //$stripeCustomer = $tramite->createAsStripeCustomer();
-    return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6' => 2], [
-        'success_url' => route('success'),
-        'cancel_url' => URL::signedRoute('temporary.create'),
-    ]);
-});
+Route::get('bdv-webhook' , function(){
+    $ipgBdv = new IpgBdv("70443643","7OaoCfw8");
+    $response = $ipgBdv->checkPayment(request('id'));
+    if ($response->success) {
+        $tramite = Tramite::create(session('tramite_temporal'));
+        Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
+        session()->flush();
+        return view('temporary.success');
+    } else {
+        return redirect('/');
+    }
 
-Route::get('/success' , function(){
-    $tramite = Tramite::where('id' , request('tramite'))->first();
-    $tramite->update(['pago' => true]);
-    Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
-    return view('temporary.success');
-})->name('success');
+})->name('bdv.webhook');
 
-Route::get('/fail' , function(){
-    $tramite = Tramite::where('id' , request('tramite'))->first();
-    $tramite->delete();
-    return redirect('/');
-})->name('fail');
 

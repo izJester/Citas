@@ -11,6 +11,11 @@ use Squire\Models\Country;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\URL;
 
+use App\Classes\IpgBdv;
+use App\Classes\IpgBdvPaymentRequest;
+
+
+
 class CrearTramite extends Component implements Forms\Contracts\HasForms
 {
     use Forms\Concerns\InteractsWithForms;
@@ -162,15 +167,33 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
 
     public function submit()
     {
-        $tramite = Tramite::create($this->form->getState());
-        if (empty($tramite->stripe_id)) {
-            $tramite->createAsStripeCustomer();
-        }
+        session(['tramite_temporal' => $this->form->getState()]);
+        $Payment = new IpgBdvPaymentRequest();
+        $Payment->idLetter= $this->tipo_cedula; //Letra de la cédula - V, E o P
+        $Payment->idNumber= 16085405; //Número de cédula
+        $Payment->amount= 1000000; //Monto a cobrar, FLOAT
+        $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
+        $Payment->reference= "FAC0001-00001552"; //Código de referecia o factura
+        $Payment->title= "Servicio de Cable"; //Título para el pago, Ej: Servicio de Cable
+        $Payment->description= "Abono mes de marzo 2017"; //Descripción del pago, Ej: Abono mes de marzo 2017
+        $Payment->email= $this->email; //Mail para envio de token si corresponde
+        $Payment->cellphone= "4122741219"; //telefono para envio de token si corresponde en otros bancos
+        $Payment->urlToReturn= route('bdv.webhook'); //URL de retorno al finalizar el pago
 
-        return $tramite->checkout(['price_1KlitfCfO3YICm7hCUSDnlO6'] , [
-            'success_url' => route('success') . '?tramite=' . $tramite->id,
-            'cancel_url' => route('fail') . '?tramite=' . $tramite->id,
-        ]);
+        $PaymentProcess = new IpgBdv("70443643","7OaoCfw8");
+
+        $response = $PaymentProcess->createPayment($Payment);
+
+        if ($response->success == true) // Se evalúa la respuesta
+        {
+            return redirect($response->urlPayment);
+        }
+        else
+        {
+            return $response->responseCode . " - " . $response->responseMessage;
+        }
+        
+        
     }
 
     public function render(): View
