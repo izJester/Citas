@@ -10,6 +10,7 @@ use App\Mail\TramiteRegistradoConExito;
 
 use App\Classes\IpgBdv;
 use App\Classes\IpgBdvPaymentRequest;
+use App\Models\Pago;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +37,11 @@ Route::controller(TramiteController::class)->group(function () {
 });
 
 Route::get('bdv-webhook' , function(){
-    $ipgBdv = new IpgBdv("70443643","7OaoCfw8");
+    $ipgBdv = new IpgBdv(config('bdv.user'), config('bdv.password'));
     $response = $ipgBdv->checkPayment(request('id'));
     if ($response->success) {
         $tramite = Tramite::create(session('tramite_temporal'));
+        Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
         Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
         session()->flush();
         return view('temporary.success');
@@ -48,5 +50,9 @@ Route::get('bdv-webhook' , function(){
     }
 
 })->name('bdv.webhook');
+
+Route::get('prueba' , function(){
+    return dd(config('bdv.user') , config('bdv.password'));
+});
 
 

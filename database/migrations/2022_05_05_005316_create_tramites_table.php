@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('pago')->nullable();
             $table->string('total')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
