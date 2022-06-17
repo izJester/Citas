@@ -8,6 +8,7 @@ use Filament\Resources\Pages\Page;
 use Filament\Forms;
 use App\Models\Cita;
 use App\Models\Tramite;
+use Closure;
 
 class CrearCita extends Page implements Forms\Contracts\HasForms
 {
@@ -18,6 +19,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
     public $tramite;
     public $record;
     public $estatus;
+    public $tramite_id;
 
     public function mount()
     {
@@ -29,10 +31,20 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
         return [
             Forms\Components\Card::make()
                         ->schema([
-                          
-                            Forms\Components\DatePicker::make('fecha')
+
+                          Forms\Components\Select::make('estatus')
                                 ->required()
-                                ->label('Fecha de la cita'),
+                                ->reactive()
+                                ->label('Estatus')
+                                ->options([
+                                    'Pendiente' => 'Pendiente',
+                                    'Cancelada' => 'Cancelada',
+                                    'Realizada' => 'Realizada',
+                                ]),
+                            Forms\Components\DatePicker::make('fecha')
+                                ->label('Fecha de la cita')
+                                ->hidden(fn(Closure $get) => $get('estatus') != 'Realizada'),
+                            
                         ]),
         ];
     }
@@ -40,10 +52,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
 
     public function submit()
     {
-        Cita::create([
-            'tramite_id' => $this->tramite->id,
-            'fecha' => $this->fecha,
-        ]);
+        Cita::create(array_merge((array) $this->form->getState(), ['tramite_id' => $this->tramite->id]));
 
         $this->notify('success', 'Cita creada');
 
