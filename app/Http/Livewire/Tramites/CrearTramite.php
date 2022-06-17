@@ -185,20 +185,25 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
 
     public function submit()
     {
-        //return dd($this->form->getState());
-
-        return dd(Motivo::whereIn('id', collect($this->motivos)->pluck('id', 'cantidad')->toArray()));
-
+        $motivosBD = Motivo::whereIn('id', collect($this->motivos)->pluck('id')->toArray())->get();
+        $totalPetro = 0;
+        foreach ($this->motivos as $key => $value) {
+            $totalPetro += $motivosBD->where('id', $value['id'])->first()->precio * $value['cantidad'];
+        }
     
         session(['tramite_temporal' => $this->form->getState()]);
         $Payment = new IpgBdvPaymentRequest();
         $Payment->idLetter= $this->tipo_cedula; //Letra de la cédula - V, E o P
         $Payment->idNumber= 16085405; //Número de cédula
-        $Payment->amount= 1000000; //Monto a cobrar, FLOAT
+        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
+        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
+        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
+        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
+        $Payment->amount= round($totalPetro * 321.91, 2) ;//TODO: BUSCAR VALOR PETRO VIA API OFICIAL; //Monto a cobrar, FLOAT
         $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
-        $Payment->reference= "FAC0001-00001552"; //Código de referecia o factura
-        $Payment->title= "Servicio de Cable"; //Título para el pago, Ej: Servicio de Cable
-        $Payment->description= "Abono mes de marzo 2017"; //Descripción del pago, Ej: Abono mes de marzo 2017
+        $Payment->reference= "{$this->tipo_cedula}{$this->cedula}-{$this->identificador}"; //Código de referecia o factura
+        $Payment->title= "TRÁMITES NACIONALES E INTERNACIONALES PARA EGRESADOS"; //Título para el pago, Ej: Servicio de Cable
+        $Payment->description= "Documentos tramitados " . ($this->encomienda ? 'con servicio de encomienda' : 'sin servicio de encomienda'); //Descripción del pago, Ej: Abono mes de marzo 2017
         $Payment->email= $this->email; //Mail para envio de token si corresponde
         $Payment->cellphone= "4122741219"; //telefono para envio de token si corresponde en otros bancos
         $Payment->urlToReturn= route('bdv.webhook'); //URL de retorno al finalizar el pago
