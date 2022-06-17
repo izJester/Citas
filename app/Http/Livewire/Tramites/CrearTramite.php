@@ -183,7 +183,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         ];
     }
 
-    public function submit()
+    public function submit(): void
     {
         $motivosBD = Motivo::whereIn('id', collect($this->motivos)->pluck('id')->toArray())->get();
         $totalPetro = 0;
@@ -214,11 +214,11 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
 
         if ($response->success == true) // Se evalúa la respuesta
         {
-            return redirect($response->urlPayment);
+            redirect($response->urlPayment);
         }
         else
         {
-            return $response->responseCode . " - " . $response->responseMessage;
+            $response->responseCode . " - " . $response->responseMessage;
         }
         
     }
