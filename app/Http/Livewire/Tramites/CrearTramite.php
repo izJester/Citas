@@ -199,7 +199,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
-        $Payment->amount= round($totalPetro * 321.91, 2) ;//TODO: BUSCAR VALOR PETRO VIA API OFICIAL; //Monto a cobrar, FLOAT
+        $Payment->amount= $totalPetro * 321.91 ;//TODO: BUSCAR VALOR PETRO VIA API OFICIAL; //Monto a cobrar, FLOAT
         $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
         $Payment->reference= "{$this->tipo_cedula}{$this->cedula}-{$this->identificador}"; //Código de referecia o factura
         $Payment->title= "TRÁMITES NACIONALES E INTERNACIONALES PARA EGRESADOS"; //Título para el pago, Ej: Servicio de Cable
