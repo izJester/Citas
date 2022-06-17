@@ -10,6 +10,8 @@ use App\Models\Tramite;
 use Squire\Models\Country;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\URL;
+use App\Models\Motivo;
+use Closure;
 
 use App\Classes\IpgBdv;
 use App\Classes\IpgBdvPaymentRequest;
@@ -133,28 +135,43 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                     ->label('Modalidad del Trámite')
                                     ->required()
                                     ->options([
-                                        'Nacional' => 'Nacional',
-                                        'Internacional' => 'Internacional',
+                                        'nacional' => 'Nacional',
+                                        'internacional' => 'Internacional',
                     
-                                    ]),
+                                    ])
+                                    ->reactive()
+                                    ->afterStateUpdated(fn (callable $set) => $set('motivo' , null)),
                                     Forms\Components\Select::make('motivo')
                                         ->label('Documento')
                                         ->required()
-                                        ->options([
-                                            'Notas Certificadas' => 'Notas Certificadas',
-                                            'Certificacion de Titulo' => 'Certificacion de Titulo',
-                                            'Validacion de Servicio Comunitario' => 'Validacion de Servicio Comunitario',
-                        
-                                        ]),
+                                        ->options(function(callable $get){
+                                            $motivo = Motivo::where('tipo', $get('tipo'))->get();
+
+                                            return $motivo->pluck('nombre', 'nombre');
+
+
+                                        })
+                                        ->reactive()
+                                        ->afterStateUpdated(function (Closure $get , $set, $state) {
+                                            $set('precio', Motivo::where('nombre', $state)->where('tipo' , $get('tipo'))->first()->precio);
+                                            $set('id' , Motivo::where('nombre', $state)->where('tipo' , $get('tipo'))->first()->id);
+                                        }),
+
+                                    Forms\Components\Hidden::make('id'),
+                                    
                                     Forms\Components\TextInput::make('cantidad')
                                         ->rules(['numeric', 'max:5'])
                                         ->label('Cantidad requerida')
                                         ->required(),
+                                    Forms\Components\TextInput::make('precio')
+                                        ->disabled()
+                                        ->helperText('Precio expresado en Petros'),
+                                    
 
                                 
                         ])
                         ->columnSpan(2)
-                        ->columns(3)
+                        ->columns(2)
                         ->createItemButtonLabel('Añadir otro documento'),
 
 
@@ -168,16 +185,20 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
 
     public function submit()
     {
-        session(['tramite_temporal' => $this->form->getState()]);
+        //return dd($this->form->getState());
 
+        return dd(Motivo::whereIn('id', collect($this->motivos)->pluck('id', 'cantidad')->toArray()));
+
+    
+        session(['tramite_temporal' => $this->form->getState()]);
         $Payment = new IpgBdvPaymentRequest();
         $Payment->idLetter= $this->tipo_cedula; //Letra de la cédula - V, E o P
         $Payment->idNumber= 16085405; //Número de cédula
         $Payment->amount= 1000000; //Monto a cobrar, FLOAT
         $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
         $Payment->reference= "FAC0001-00001552"; //Código de referecia o factura
-        $Payment->title= "Cita para tramite"; //Título para el pago, Ej: Servicio de Cable
-        $Payment->description= "Documentos tramitados" . $this->encomienda ? 'con servicio de encomienda' : 'sin servicio de encomienda';
+        $Payment->title= "Servicio de Cable"; //Título para el pago, Ej: Servicio de Cable
+        $Payment->description= "Abono mes de marzo 2017"; //Descripción del pago, Ej: Abono mes de marzo 2017
         $Payment->email= $this->email; //Mail para envio de token si corresponde
         $Payment->cellphone= "4122741219"; //telefono para envio de token si corresponde en otros bancos
         $Payment->urlToReturn= route('bdv.webhook'); //URL de retorno al finalizar el pago
@@ -194,7 +215,6 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         {
             return $response->responseCode . " - " . $response->responseMessage;
         }
-        
         
     }
 
