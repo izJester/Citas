@@ -3,13 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TramiteResource\Pages;
+use App\Filament\Resources\CitaResource;
 use App\Filament\Resources\TramiteResource\RelationManagers;
 use App\Models\Tramite;
+use App\Models\Cita;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Collection;
+use Closure;
 
 class TramiteResource extends Resource
 {
@@ -59,18 +63,46 @@ class TramiteResource extends Resource
                 Tables\Columns\TextColumn::make('telefono'),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fecha_egreso')
-                    ->dateTime(),
+            
                 Tables\Columns\BooleanColumn::make('encomienda'),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\Action::make('crear')
-                    ->label('Crear cita')
-                    ->url(fn (Tramite $record): string => route('filament.resources.tramites.create_cita', $record))
-                    ->icon('heroicon-s-plus')
+            
+            ->bulkActions([
+                Tables\Actions\BulkAction::make('crear_cita')
+                    ->label('Crear Cita')
+                    ->modalHeading('Asignar Cita al Tramite Seleccionado')
+                    ->icon('heroicon-o-pencil')
+                    ->action(function (Collection $records, array $data): void {
+                        foreach ($records as $record) {
+                            Cita::create(array_merge((array) $data, ['tramite_id' => $record->id]));
+                            redirect(CitaResource::getUrl('index'));
+                        }
+                    })
+                    ->deselectRecordsAfterCompletion()
+                    ->form([
+                        Forms\Components\Select::make('estatus')
+                                ->required()
+                                ->reactive()
+                                ->label('Estatus')
+                                ->options([
+                                    'Pendiente' => 'Pendiente',
+                                    'Cancelada' => 'Cancelada',
+                                    'Realizada' => 'Realizada',
+                                ]),
+                            Forms\Components\DatePicker::make('fecha')
+                                ->label('Fecha de la cita')
+                                ->hidden(fn(Closure $get) => $get('estatus') != 'Realizada'),
+                            ]),
+                        Tables\Actions\BulkAction::make('delete')
+                            ->label('Eliminar')
+                            ->action(fn (Collection $records) => $records->each->delete())
+                            ->deselectRecordsAfterCompletion()
+                            ->requiresConfirmation()
+                            ->color('danger')
+                            ->icon('heroicon-o-trash')
             ]);
     }
     

@@ -53,38 +53,38 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                     ->schema([
                         Forms\Components\TextInput::make('nombres')
                             ->label('Nombres')
-                            ->default(old('nombres'))
-                            ->required(),
+                            ->required()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('apellidos')
                             ->label('Apellidos')
-                            ->default(old('apellidos'))
-                            ->required(),
+                            ->required()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\Select::make('tipo_cedula')
                             ->label('Tipo de documento de identidad')
-                            ->default(old('tipo_cedula'))
                             ->required()
                             ->options([
                                 'V' => 'Venezolano',
                                 'E' => 'Extranjero',
                                 'P' => 'Pasaporte',
-                            ]),
+                            ])
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('cedula')
                             ->label('Número de documento de identidad')
-                            ->default(old('cedula'))
-                            ->required(),
+                            ->numeric()
+                            ->required()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\Select::make('nucleo')
                             ->label('Núcleo')
-                            ->default(old('nucleo'))
                             ->required()
                             ->options([
                                 'chuao' => 'Chuao',
                                 'maracay' => 'Maracay',
                                 'guaira' => 'La Guaira',
                                 'teques' => 'Los Teques'
-                            ]),
+                            ])
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\Select::make('carrera')
                             ->label('Carrera cursada')
-                            ->default(old('carrera'))
                             ->required()
                             ->options([
                                 'sistemas' => 'Ing de Sistemas',
@@ -92,29 +92,31 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                 'telecom' => 'Ing en Telecomunicaciones',
                                 'civil' => 'Ing Civil',
                                 'turismo' => 'Turismo'
-                            ]),
+                            ])
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('direccion')
                             ->label('Dirección')
-                            ->default(old('direccion'))
-                            ->required(),
+                            ->required()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('telefono')
                             ->rules(['numeric', 'digits:11'])
-                            ->default(old('telefono'))
+                            ->numeric()
                             ->label('Número de teléfono')
-                            ->required(),
+                            ->required()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('email')
                             ->label('Correo electrónico')
-                            ->default(old('email'))
                             ->required()
-                            ->email(),
+                            ->email()
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\Select::make('pais')
                             ->label('País de origen / Nacionlidad')
-                            ->default(old('pais'))
                             ->required()
-                            ->options($this->paises->pluck('name', 'name')),
+                            ->searchable()
+                            ->options($this->paises->pluck('name', 'name'))
+                            ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\DatePicker::make('fecha_egreso')
                             ->label('Fecha de Egreso')
-                            ->default(old('fecha_egreso'))
                             ->required()
                             ->displayFormat('d/m/Y')
                             ->columnSpan(2),
@@ -130,6 +132,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ->default(false),
                         Forms\Components\Repeater::make('motivos')
                             ->label('Documentos a solicitar')
+                            ->collapsible()
                             ->schema([
                                 Forms\Components\Select::make('tipo')
                                     ->label('Modalidad del Trámite')

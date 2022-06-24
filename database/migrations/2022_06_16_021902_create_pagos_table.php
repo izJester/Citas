@@ -33,7 +33,10 @@ return new class extends Migration
             $table->integer('authorizationCode');
             $table->string('paymentMethodNumber');
             $table->string('paymentDate');
-            $table->foreignIdFor(App\Models\Tramite::class)->constrained();
+            $table->foreignUuid('tramite_id')
+                ->constrained()
+                ->nullable()
+                ->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

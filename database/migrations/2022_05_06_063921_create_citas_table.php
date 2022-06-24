@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
-            $table->string('tramite_id');
+            $table->foreignUuid('tramite_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->date('fecha')->nullable();
             $table->string('estatus');
             $table->timestamps();
