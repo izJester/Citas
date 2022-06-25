@@ -41,14 +41,13 @@ Route::get('bdv-webhook' , function(){
     $response = $ipgBdv->checkPayment(request('id'));
     if ($response->success) {
         $tramite = Tramite::create(session('tramite_temporal'));
-        Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
-        Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
+        $pago = Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
+        Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite, $pago));
         session()->flush();
         return view('temporary.success');
     } else {
         return redirect('/');
     }
-
 })->name('bdv.webhook');
 
 Route::get('prueba' , function(){

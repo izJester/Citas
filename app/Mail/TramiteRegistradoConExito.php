@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Pago;
 use App\Models\Tramite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -13,15 +14,17 @@ class TramiteRegistradoConExito extends Mailable
     use Queueable, SerializesModels;
 
     public $tramite;
+    public $pago;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Tramite $tramite)
+    public function __construct(Tramite $tramite, Pago $pago)
     {
         $this->tramite = $tramite;
+        $this->pago = $pago;
     }
 
     /**

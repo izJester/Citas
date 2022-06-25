@@ -45,5 +45,8 @@ class Tramite extends Model
         return $this->hasOne(Cita::class);
     }
 
-
+    public function pago()
+    {
+        return $this->hasOne(Pago::class);
+    }
 }

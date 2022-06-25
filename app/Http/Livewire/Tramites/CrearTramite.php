@@ -206,7 +206,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
         $Payment->reference= "{$this->tipo_cedula}{$this->cedula}-{$this->identificador}"; //Código de referecia o factura
         $Payment->title= "TRÁMITES NACIONALES E INTERNACIONALES PARA EGRESADOS"; //Título para el pago, Ej: Servicio de Cable
-        $Payment->description= "Documentos tramitados " . ($this->encomienda ? 'con servicio de encomienda' : 'sin servicio de encomienda'); //Descripción del pago, Ej: Abono mes de marzo 2017
+        $Payment->description= "Documentos tramitados " . ($this->encomienda ? 'con servicio de encomienda' : 'sin servicio de encomienda') . ' - UNEFA CHUAO'; //Descripción del pago, Ej: Abono mes de marzo 2017
         $Payment->email= $this->email; //Mail para envio de token si corresponde
         $Payment->cellphone= "4122741219"; //telefono para envio de token si corresponde en otros bancos
         $Payment->urlToReturn= route('bdv.webhook'); //URL de retorno al finalizar el pago
