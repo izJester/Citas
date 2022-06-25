@@ -1,6 +1,6 @@
 <div>
     <form wire:submit.prevent="search" class="flex justify-center items-center">
-        <label for="simple-search" class="sr-only">Ingresa tu codigo identificador</label>
+        <label for="simple-search" class="sr-only">Ingresa tu código identificador</label>
         <div class="relative w-1/2">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -17,10 +17,10 @@
 
     @if(empty($result))
     <div class="flex justify-center p-6">
-        <img class="w-1/4 h-1/4" src="/images/noresult.svg" alt="">
+        <img class="w-1/4 h-1/4" src="/images/no-match.png" alt="">
     </div>
     <div class="text-center">
-        <span class="font-bold text-lg tracking-normal">Whoops! Al parecer no encontramos resultados</span>
+        <span class="font-bold text-lg tracking-normal">Whoops! Al parecer no existe este código identificador</span>
     </div>
 
     @elseif($result == 'default')
