@@ -2,16 +2,12 @@
 @section('content')
 	<h4>Estimado(a) {{ ucfirst($tramite->nombres) }} {{ ucfirst($tramite->apellidos) }}</h4>
 	<p>
-		Nos complace informarle que su registro de trámite en el sistema de taquilla virtual fué exitoso, 
-        este paso permitió confirmar sus datos personales e información de contacto, estos serán utilizados en la gestión de sus documentos.
-	</p>
-	<p>
-		A fin de proveer un mejor control y calidad de servicio en la gestión de sus solicitudes, 
-        un funcionario administrativo de la Universidad Nacional Experimental Politécnica de la Fuerza Armada estará validando su información 
-        y enviará una respuesta de seguimiento a su correo electrónico.
-	</p>
+		Nos complace informarle que se ha generado una cita en el sistema de taquilla virtual.
+    </p>
+		<h2 class="titulo">{{ $cita->fecha->format('d/m/Y') }}</h2>
+		<p class="titulo">(Fecha expresada en dia / mes / ano)</p>
     <p>
-		A fin de proveer un mejor control y calidad de servicio en la gestión de sus solicitudes se adjunta el resumen de los documentos solicitados
+		A fin de proveer un mejor control de acceso y calidad de servicio en la gestión de sus solicitudes presente el codigo de tramite numero 
 	</p>
     <table style="border: 0; margin: 1em" border="0" cellpadding="2" cellspacing="2" width="100%">
 		<!-- <tr>

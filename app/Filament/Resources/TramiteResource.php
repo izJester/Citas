@@ -12,6 +12,9 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CrearCitaTramite;
+
 use Illuminate\Database\Eloquent\Collection;
 use Closure;
 
@@ -77,7 +80,10 @@ class TramiteResource extends Resource
                     ->icon('heroicon-o-pencil')
                     ->action(function (Collection $records, array $data): void {
                         foreach ($records as $record) {
-                            Cita::create(array_merge((array) $data, ['tramite_id' => $record->id]));
+                           $cita = Cita::create(array_merge((array) $data, ['tramite_id' => $record->id]));
+                           if ($cita->estatus == 'Realizada') {
+                               Mail::to($record->email)->send(new CrearCitaTramite($cita));
+                           }
                             redirect(CitaResource::getUrl('index'));
                         }
                     })

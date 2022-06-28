@@ -36,19 +36,18 @@ Route::controller(TramiteController::class)->group(function () {
     //Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
 });
 
-Route::get('bdv-webhook' , function(){
-    $ipgBdv = new IpgBdv(config('bdv.user'), config('bdv.password'));
-    $response = $ipgBdv->checkPayment(request('id'));
-    if ($response->success) {
-        $tramite = Tramite::create(session('tramite_temporal'));
-        $pago = Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
-        Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite, $pago));
-        session()->flush();
-        return view('temporary.success');
-    } else {
-        return redirect('/');
-    }
-})->name('bdv.webhook');
+Route::get('/success' , function(){
+    $tramite = Tramite::where('id' , request('tramite'))->first();
+    $tramite->update(['pago' => true]);
+    Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite));
+    return view('temporary.success');
+})->name('success');
+
+Route::get('/fail' , function(){
+    $tramite = Tramite::where('id' , request('tramite'))->first();
+    $tramite->delete();
+    return redirect('/');
+})->name('fail');
 
 Route::get('prueba' , function(){
     return dd(config('bdv.user') , config('bdv.password'));

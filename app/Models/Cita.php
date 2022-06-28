@@ -15,8 +15,9 @@ class Cita extends Model
         'estatus',
     ];
 
-    protected $cast = [
-        'fecha' => 'date',
+
+    protected $dates = [
+        'fecha',
     ];
 
     public function tramite()

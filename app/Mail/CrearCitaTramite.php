@@ -2,16 +2,17 @@
 
 namespace App\Mail;
 
-use App\Models\Tramite;
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use App\Models\Cita;
+use Illuminate\Queue\SerializesModels;
 
-class TramiteRegistradoConExito extends Mailable
+class CrearCitaTramite extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $cita;
     public $tramite;
 
     /**
@@ -19,9 +20,10 @@ class TramiteRegistradoConExito extends Mailable
      *
      * @return void
      */
-    public function __construct(Tramite $tramite)
+    public function __construct(Cita $cita)
     {
-        $this->tramite = $tramite;
+        $this->cita = $cita;
+        $this->tramite = $cita->tramite;
     }
 
     /**
@@ -31,6 +33,6 @@ class TramiteRegistradoConExito extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.tramite-registrado-con-exito');
+        return $this->view('mail.cita-creada');
     }
 }
