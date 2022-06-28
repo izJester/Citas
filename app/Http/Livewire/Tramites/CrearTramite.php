@@ -2,19 +2,20 @@
 
 namespace App\Http\Livewire\Tramites;
 
+use Closure;
 use Filament\Forms;
-use Illuminate\Contracts\View\View;
-use Livewire\Component;
-use Filament\Forms\Components\Wizard;
+use App\Models\Motivo;
+use App\Classes\IpgBdv;
 use App\Models\Tramite;
+use Livewire\Component;
 use Squire\Models\Country;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Facades\URL;
-use App\Models\Motivo;
-use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 
-use App\Classes\IpgBdv;
+use Illuminate\Support\Facades\URL;
 use App\Classes\IpgBdvPaymentRequest;
+use Filament\Forms\Components\Wizard;
 
 
 
@@ -197,7 +198,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         session(['tramite_temporal' => $this->form->getState()]);
         $Payment = new IpgBdvPaymentRequest();
         $Payment->idLetter= $this->tipo_cedula; //Letra de la cédula - V, E o P
-        $Payment->idNumber= 16085405; //Número de cédula
+        $Payment->idNumber= $this->cedula; //Número de cédula
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
         //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
@@ -221,6 +222,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         }
         else
         {
+            Log::emergency("Falla de comunicación con BDV", ['bdv_response' => $response]);
             $response->responseCode . " - " . $response->responseMessage;
         }
         
