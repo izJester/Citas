@@ -5,9 +5,9 @@
 		Nos complace informarle que se ha generado una cita en el sistema de taquilla virtual.
     </p>
 		<h2 class="titulo">{{ $cita->fecha->format('d/m/Y') }}</h2>
-		<p class="titulo">(Fecha expresada en dia / mes / ano)</p>
+		<p class="titulo">Fecha expresada en dia / mes / año</p>
     <p>
-		A fin de proveer un mejor control de acceso y calidad de servicio en la gestión de sus solicitudes presente el codigo de tramite numero 
+		A fin de proveer un mejor control de acceso y calidad de servicio en la gestión de sus solicitudes presente el código de trámite 
 	</p>
     <table style="border: 0; margin: 1em" border="0" cellpadding="2" cellspacing="2" width="100%">
 		<!-- <tr>
