@@ -33,6 +33,7 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
 
                             Forms\Components\DatePicker::make('fecha')
                                 ->label('Fecha de la cita')
+                                ->displayFormat('d/m/Y')
                                 
                             
                         ]),
@@ -42,8 +43,13 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
 
     public function submit()
     {
+        
         Cita::create(array_merge((array) $this->form->getState(), ['tramite_id' => $this->tramite->id]));
-
+        
+        $this->tramite->update([
+            'estatus' => "Cita Asignada"
+        ]);
+        
         $this->notify('success', 'Cita creada');
 
         return redirect(CitaResource::getUrl('index'));

@@ -15,7 +15,7 @@
          <span>Dirección: {{ $record->direccion }}</span>
          <span>Numero Telefonico: {{ $record->telefono }}</span>
          <span>{{ $record->email }}</span>
-         <span>Fecha en la que egreso: {{ $record->fecha_egreso }}</span>
+         <span>Fecha en la que egreso: {{ \Carbon\Carbon::parse($record->fecha_egreso)->toDateString() }}</span>
          <span class="text-xl">Identificador: {{ $record->identificador }}</span>
          <span class="font-bold tracking-normal">Agregado {{ $record->created_at->diffForHumans() }}</span>
       </div>
@@ -55,7 +55,12 @@
 
 </div>
 
-    {{ $record->cita }}
+    <div class="">
+        <span class="text-lg font-semibold">Fecha de la cita:</span>
+        {{ \Carbon\Carbon::parse($record->cita->fecha)->toDateString() }}
+
+    </div>
+
 
     <div class="flex flex-col">
         <span>Estatus del tramite: {{ $record->estatus }}</span>

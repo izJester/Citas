@@ -45,7 +45,9 @@ class CitaResource extends Resource
                 Tables\Columns\TextColumn::make('tramite.carrera')
                     ->searchable()
                     ->label('Carrera'),
-                Tables\Columns\TextColumn::make('fecha'),
+                Tables\Columns\TextColumn::make('fecha')
+                    ->date()
+                    ,
             ])
             ->filters([
                 Tables\Filters\Filter::make('fecha')
