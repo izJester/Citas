@@ -32,7 +32,7 @@
         {{ $slot }}
     </div>
 
-    <div class="mt-12 mb-4 text-center w-1/2 mx-auto" style="font-size: 0.6rem;">
+    <div class="mt-10 mb-4 text-center w-1/2 mx-auto" style="font-size: 0.6rem;">
         <p class="mb-1">
             Prototipo de sistema web de gestión para la automatización de citas y solicitudes de los
             egresados para el departamento de Secretaría General de la Universidad Nacional

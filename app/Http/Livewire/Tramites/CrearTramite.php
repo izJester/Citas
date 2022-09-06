@@ -120,6 +120,7 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                         Forms\Components\DatePicker::make('fecha_egreso')
                             ->label('Fecha de Egreso')
                             ->required()
+                            ->maxDate(now())
                             ->displayFormat('d/m/Y')
                             ->columnSpan(2),
                         Forms\Components\Hidden::make('identificador')->default(session('code')),
