@@ -18,8 +18,7 @@ return new class extends Migration
             $table->foreignUuid('tramite_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->date('fecha')->nullable();
-            $table->string('estatus');
+            $table->timestamp('fecha');
             $table->timestamps();
         });
     }

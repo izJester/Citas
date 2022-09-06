@@ -12,13 +12,8 @@ class Cita extends Model
     protected $fillable = [
         'tramite_id',
         'fecha',
-        'estatus',
     ];
 
-
-    protected $dates = [
-        'fecha',
-    ];
 
     public function tramite()
     {

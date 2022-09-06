@@ -88,11 +88,11 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ->label('Carrera cursada')
                             ->required()
                             ->options([
-                                'sistemas' => 'Ing de Sistemas',
-                                'enfermeria' => 'Enfermeria',
-                                'telecom' => 'Ing en Telecomunicaciones',
-                                'civil' => 'Ing Civil',
-                                'turismo' => 'Turismo'
+                                'Ing de Sistemas' => 'Ing de Sistemas',
+                                'Enfermeria' => 'Enfermeria',
+                                'Ing en Telecomunicaciones' => 'Ing en Telecomunicaciones',
+                                'Ing Civil' => 'Ing Civil',
+                                'Turismo' => 'Turismo'
                             ])
                             ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('direccion')

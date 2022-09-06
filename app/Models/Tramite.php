@@ -29,6 +29,8 @@ class Tramite extends Model
         'motivos',
         'encomienda',
         'nucleo',
+        'carrera',
+        'estatus',
         'total'
     ];
 
@@ -39,6 +41,8 @@ class Tramite extends Model
     protected $hidden = [
         'stripe_id',
     ];
+
+    protected $with = ['cita'];
 
     public function cita()
     {

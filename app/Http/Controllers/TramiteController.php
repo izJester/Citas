@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTemporalRequest;
 use App\Http\Requests\UpdateTemporalRequest;
+use App\Models\Cita;
 use Illuminate\Http\Request;
 use App\Models\Tramite;
 use Illuminate\Support\Str;

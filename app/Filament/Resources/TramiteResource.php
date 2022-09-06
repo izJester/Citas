@@ -73,35 +73,8 @@ class TramiteResource extends Resource
                 //
             ])
             
+            
             ->bulkActions([
-                Tables\Actions\BulkAction::make('crear_cita')
-                    ->label('Crear Cita')
-                    ->modalHeading('Asignar Cita al Tramite Seleccionado')
-                    ->icon('heroicon-o-pencil')
-                    ->action(function (Collection $records, array $data): void {
-                        foreach ($records as $record) {
-                           $cita = Cita::create(array_merge((array) $data, ['tramite_id' => $record->id]));
-                           if ($cita->estatus == 'Realizada') {
-                               Mail::to($record->email)->send(new CrearCitaTramite($cita));
-                           }
-                            redirect(CitaResource::getUrl('index'));
-                        }
-                    })
-                    ->deselectRecordsAfterCompletion()
-                    ->form([
-                        Forms\Components\Select::make('estatus')
-                                ->required()
-                                ->reactive()
-                                ->label('Estatus')
-                                ->options([
-                                    'Pendiente' => 'Pendiente',
-                                    'Cancelada' => 'Cancelada',
-                                    'Realizada' => 'Realizada',
-                                ]),
-                            Forms\Components\DatePicker::make('fecha')
-                                ->label('Fecha de la cita')
-                                ->hidden(fn(Closure $get) => $get('estatus') != 'Realizada'),
-                            ]),
                         Tables\Actions\BulkAction::make('delete')
                             ->label('Eliminar')
                             ->action(fn (Collection $records) => $records->each->delete())
