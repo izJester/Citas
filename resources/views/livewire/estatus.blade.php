@@ -75,18 +75,10 @@
 
             </div>
 
+            {{ $result->cita->fecha }}
+
             <div class="flex flex-col">
-                @if(empty($result->cita->estatus))
-
-                @else
-                <span class="text-lg tracking-normal">Estatus del Tramite: <span>{{ $result->cita->estatus }}</span></span>
-                @endif
-
-                @if(empty($result->cita->fecha))
-
-                @else
-                <span class="text-lg tracking-normal">Fecha de la Cita: <span>{{ $result->cita->fecha }}</span></span>
-                @endif
+                <span>Estatus del tramite: {{ $result->estatus }}</span>
             </div>
 
 
