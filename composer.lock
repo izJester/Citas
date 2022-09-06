@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a117bdd165004af8b9c48bc38e1ce08",
+    "content-hash": "1903b125132b8d2c9bc5777e3c371b53",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -9027,6 +9027,64 @@
                 "source": "https://github.com/wire-elements/modal/tree/1.0.7"
             },
             "time": "2022-07-05T12:40:12+00:00"
+        },
+        {
+            "name": "yepsua/filament-themes",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yepsua/filament-themes.git",
+                "reference": "c8bff4c090a25c0dbea23e5e6b7b5e96715bd9d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yepsua/filament-themes/zipball/c8bff4c090a25c0dbea23e5e6b7b5e96715bd9d7",
+                "reference": "c8bff4c090a25c0dbea23e5e6b7b5e96715bd9d7",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^8.0|^9.0",
+                "php": "^8.0 | ^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Yepsua\\Filament\\Themes\\YepsuaFilamentThemesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yepsua\\Filament\\Themes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Omar Yepez",
+                    "email": "oyepez003@gmail.com"
+                }
+            ],
+            "description": "Manage filament themes from the config files",
+            "homepage": "https://github.com/z3d0x/filament-logger",
+            "keywords": [
+                "filament",
+                "laravel",
+                "themes"
+            ],
+            "support": {
+                "issues": "https://github.com/yepsua/filament-themes/issues",
+                "source": "https://github.com/yepsua/filament-themes/tree/v0.1.0"
+            },
+            "time": "2022-05-03T19:43:34+00:00"
         }
     ],
     "packages-dev": [

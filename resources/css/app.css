@@ -2,3 +2,5 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import '../../vendor/filament/forms/dist/module.esm.css';
+@import 'tippy.js/dist/tippy.css';
+@import 'tippy.js/themes/light.css';
