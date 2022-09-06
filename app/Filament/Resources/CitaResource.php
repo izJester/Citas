@@ -28,14 +28,6 @@ class CitaResource extends Resource
                     ->schema([
                         Forms\Components\DatePicker::make('fecha')
                             ->label('Fecha de la cita'),
-                        Forms\Components\Select::make('estatus')
-                            ->required()
-                            ->label('Estatus')
-                            ->options([
-                                'Pendiente' => 'Pendiente',
-                                'Cancelada' => 'Cancelada',
-                                'Realizada' => 'Realizada',
-                            ]),
                     ]),
             ]);
     }
@@ -50,7 +42,9 @@ class CitaResource extends Resource
                 Tables\Columns\TextColumn::make('tramite.apellidos')
                     ->searchable()
                     ->label('Apellidos'),
-                Tables\Columns\TextColumn::make('estatus'),
+                Tables\Columns\TextColumn::make('tramite.carrera')
+                    ->searchable()
+                    ->label('Carrera'),
                 Tables\Columns\TextColumn::make('fecha'),
             ])
             ->filters([

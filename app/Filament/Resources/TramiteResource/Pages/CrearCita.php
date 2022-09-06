@@ -18,7 +18,6 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
     public $fecha;
     public $tramite;
     public $record;
-    public $estatus;
     public $tramite_id;
 
     public function mount()
@@ -32,18 +31,9 @@ class CrearCita extends Page implements Forms\Contracts\HasForms
             Forms\Components\Card::make()
                         ->schema([
 
-                          Forms\Components\Select::make('estatus')
-                                ->required()
-                                ->reactive()
-                                ->label('Estatus')
-                                ->options([
-                                    'Pendiente' => 'Pendiente',
-                                    'Cancelada' => 'Cancelada',
-                                    'Realizada' => 'Realizada',
-                                ]),
                             Forms\Components\DatePicker::make('fecha')
                                 ->label('Fecha de la cita')
-                                ->hidden(fn(Closure $get) => $get('estatus') != 'Realizada'),
+                                
                             
                         ]),
         ];

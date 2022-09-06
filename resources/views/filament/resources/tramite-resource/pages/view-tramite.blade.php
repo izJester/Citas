@@ -5,7 +5,12 @@
    <div class="p-4 space-y-4">
 
    <div class="flex flex-col">
-         <span class="font-bold text-2xl tracking-wide">{{ $record->nombres }} {{ $record->apellidos }}</span>
+    <div class="flex justify-between">
+        <span class="font-bold text-2xl tracking-wide">{{ $record->nombres }} {{ $record->apellidos }}</span>
+        @if(empty($record->cita))
+        <a href="{{ route('filament.resources.tramites.create_cita' , $record) }}"><button class="bg-primary-500 text-white font-semibold p-2 rounded-md hover:bg-primary-600">Generar cita</button></a>
+        @endif
+    </div>
          <span>{{ $record->tipo_cedula }}-{{ $record->cedula }}</span>
          <span>Dirección: {{ $record->direccion }}</span>
          <span>Numero Telefonico: {{ $record->telefono }}</span>
@@ -50,19 +55,11 @@
 
 </div>
 
-   <div class="flex flex-col">
-      @if(empty($record->cita->estatus))
-      
-      @else
-      <span class="text-lg tracking-normal">Estatus del Tramite: <span>{{ $record->cita->estatus }}</span></span>
-      @endif
+    {{ $record->cita }}
 
-      @if(empty($record->cita->fecha))
-
-    @else
-    <span class="text-lg tracking-normal">Fecha de la Cita: <span>{{ $record->cita->fecha }}</span></span>
-    @endif
-   </div>
+    <div class="flex flex-col">
+        <span>Estatus del tramite: {{ $record->estatus }}</span>
+    </div>
 
 
    </div>
