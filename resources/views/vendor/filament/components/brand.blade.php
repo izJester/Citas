@@ -3,6 +3,6 @@
         'filament-brand text-xl font-bold tracking-tight',
         'dark:text-white' => config('filament.dark_mode'),
     ])>
-        <img src="/images/letras.png" alt="Logo" class="h-10">
+        <img src="/images/letras.png" alt="Logo" class="h-10 w-full">
     </div>
 @endif
