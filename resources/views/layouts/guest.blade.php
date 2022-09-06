@@ -60,6 +60,7 @@
     @stack('scripts')
 
     @livewireScripts
+    @livewire('notifications')
 
 </body>
 

@@ -10,9 +10,10 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.4.0",
-        "@tailwindcss/typography": "^0.5.0",
-        "alpinejs": "^3.0.6",
+        "@awcodes/alpine-floating-ui": "^3.4.0",
+        "@tailwindcss/forms": "^0.4.1",
+        "@tailwindcss/typography": "^0.5.7",
+        "alpinejs": "^3.10.3",
         "axios": "^0.25",
         "laravel-echo": "^1.11.7",
         "laravel-mix": "^6.0.6",
@@ -20,7 +21,7 @@
         "postcss": "^8.1.14",
         "postcss-import": "^14.0.1",
         "pusher-js": "^7.1.0-beta",
-        "tailwindcss": "^3.0.0"
+        "tailwindcss": "^3.1.8"
     },
     "dependencies": {
         "@themesberg/tailwind-datepicker": "^1.1.0",

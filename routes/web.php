@@ -5,12 +5,6 @@ use App\Http\Controllers\TramiteController;
 use App\Models\Tramite;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TramiteRegistradoConExito;
-
-use App\Classes\IpgBdv;
-use App\Classes\IpgBdvPaymentRequest;
-use App\Models\Pago;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,30 +22,12 @@ Route::get('/', function () {
 });
 
 Route::controller(TramiteController::class)->group(function () {
-    Route::get('/temporary-request', 'index')->name('temporary.index');
-    Route::post('/temporary-request', 'continue')->name('temporary.continue');
+    Route::get('/citas', 'index')->name('temporary.index');
+    Route::post('/citas', 'continue')->name('temporary.continue');
     Route::get('/estatus' , 'viewEstatus')->name('temporary.estatus');
-    Route::get('/temporary-request/create', 'create')->name('temporary.create')->middleware('signed');
-    //Route::get('/temporary-request/create/s', 'create_second')->name('temporary.create_second')->middleware('signed');
-    //Route::get('/temporary-request/create/t' , 'create_third')->name('temporary.create_third')->middleware('signed');
+    Route::get('/citas/create', 'create')->name('temporary.create')->middleware('signed');
 });
 
-Route::get('bdv-webhook' , function(){
-    $ipgBdv = new IpgBdv(config('bdv.user'), config('bdv.password'));
-    $response = $ipgBdv->checkPayment(request('id'));
-    if ($response->success) {
-        $tramite = Tramite::create(session('tramite_temporal'));
-        $pago = Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
-        Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite, $pago));
-        session()->flush();
-        return view('temporary.success');
-    } else {
-        return redirect('/');
-    }
-})->name('bdv.webhook');
-
-Route::get('prueba' , function(){
-    return dd(config('bdv.user') , config('bdv.password'));
-});
+Route::get('bdv-webhook' , [TramiteController::class , 'bdv'])->name('bdv.webhook');
 
 

@@ -6,5 +6,4 @@ return [
 
     'password' => env('BDV_PASS')
 
-
 ];

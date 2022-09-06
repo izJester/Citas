@@ -9,6 +9,14 @@ use App\Models\Tramite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TramiteRegistradoConExito;
+
+use App\Classes\IpgBdv;
+use App\Classes\IpgBdvPaymentRequest;
+use App\Models\Pago;
+
+
 class TramiteController extends Controller
 {
     /**
@@ -107,5 +115,20 @@ class TramiteController extends Controller
     public function destroy(Temporal $temporal)
     {
         //
+    }
+
+    public function bdv()
+    {
+        $ipgBdv = new IpgBdv(config('bdv.user'), config('bdv.password'));
+        $response = $ipgBdv->checkPayment(request('id'));
+        if ($response->success) {
+            $tramite = Tramite::create(session('tramite_temporal'));
+            $pago = Pago::create(array_merge((array) $response , ['tramite_id' => $tramite->id]));
+            Mail::to($tramite->email)->send(new TramiteRegistradoConExito($tramite, $pago));
+            session()->flush();
+            return view('temporary.success');
+        } else {
+            return redirect('/');
+        }
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Classes\IpgBdvPaymentRequest;
 use Filament\Forms\Components\Wizard;
+use Filament\Notifications\Notification;
 
 
 
@@ -199,10 +200,6 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         $Payment = new IpgBdvPaymentRequest();
         $Payment->idLetter= $this->tipo_cedula; //Letra de la cédula - V, E o P
         $Payment->idNumber= $this->cedula; //Número de cédula
-        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
-        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
-        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
-        //TODO: BUSCAR VALOR PETRO VIA API OFICIAL;
         $Payment->amount= $totalPetro * 321.91 ;//TODO: BUSCAR VALOR PETRO VIA API OFICIAL; //Monto a cobrar, FLOAT
         $Payment->currency= 1; //Moneda del pago, 1 - Bolivar Fuerte, 2 - Dolar
         $Payment->reference= "{$this->tipo_cedula}{$this->cedula}-{$this->identificador}"; //Código de referecia o factura
@@ -224,6 +221,13 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
         {
             Log::emergency("Falla de comunicación con BDV", ['bdv_response' => $response]);
             $response->responseCode . " - " . $response->responseMessage;
+
+            Notification::make() 
+            ->title('Hubo un error')
+            ->danger()
+            ->seconds(5) 
+            ->body('Hubo un error al intentar conectar con la pasarela de pago, intente mas tarde')
+            ->send(); 
         }
         
     }
