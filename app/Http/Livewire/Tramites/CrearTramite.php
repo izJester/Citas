@@ -101,9 +101,10 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                             ->required()
                             ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('telefono')
-                            ->rules(['numeric', 'digits:11'])
+                            ->rules(['digits:11'])
                             ->numeric()
                             ->label('Número de teléfono')
+                            ->tel()
                             ->required()
                             ->columnSpan(['default' => 2 , 'md' => 1]),
                         Forms\Components\TextInput::make('email')
@@ -166,7 +167,8 @@ class CrearTramite extends Component implements Forms\Contracts\HasForms
                                     Forms\Components\Hidden::make('id'),
                                     
                                     Forms\Components\TextInput::make('cantidad')
-                                        ->rules(['numeric', 'max:5'])
+                                        ->numeric()
+                                        ->rules(['max:5'])
                                         ->label('Cantidad requerida')
                                         ->required(),
                                     Forms\Components\TextInput::make('precio')
