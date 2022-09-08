@@ -75,7 +75,10 @@
 
             </div>
 
+            @if($result->cita)
+            
             {{ $result->cita->fecha }}
+            @endif
 
             <div class="flex flex-col">
                 <span>Estatus del tramite: {{ $result->estatus }}</span>

@@ -55,11 +55,15 @@
 
 </div>
 
+    @if ($record->cita)
+
     <div class="">
         <span class="text-lg font-semibold">Fecha de la cita:</span>
         {{ \Carbon\Carbon::parse($record->cita->fecha)->toDateString() }}
 
     </div>
+    @endif
+        
 
 
     <div class="flex flex-col">
